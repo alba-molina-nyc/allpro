@@ -1,7 +1,7 @@
 import re
 
 def parse_data(data):
-    company_name_match = re.search(r'^([^\n]+)', data)
+    company_name_match = re.search(r'^([^-\n]+)', data)
     company_name = company_name_match.group(1).strip() if company_name_match else ""
 
     address_line = data.split("\n")[1].strip()
@@ -15,7 +15,7 @@ def parse_data(data):
     state = state_zip.group(1) if state_zip else ""
     zip_code = state_zip.group(2) if state_zip else ""
 
-    phone_match = re.search(r'Phone:\s+([\d]+)', data)
+    phone_match = re.search(r'Phone:\s+([\d-]+)', data)
     phone_number = phone_match.group(1) if phone_match else ""
 
     parsed_data = {
@@ -34,7 +34,7 @@ data_set = """
 BERMUDA PAINT COMPANY, LTD.
 9 WATLINGTON ROAD
 DEVONSHIRE DVBX BM DV06
-Phone: 4412364662
+Phone: 441-236-4662
 """
 
 parsed_data = parse_data(data_set)
