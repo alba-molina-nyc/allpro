@@ -1,12 +1,12 @@
 import re
 
 def parse_data(data):
-    company_match = re.search(r'^(.+)\s*$', data)
-    company_name = company_match.group(1).strip() if company_match else ""
+    company_name_match = re.search(r'^([^-\n]+)', data)
+    company_name = company_name_match.group(1).strip() if company_name_match else ""
 
     address_line = data.split("\n")[1].strip()
     street_match = re.search(r'^\d+\s+(.*)$', address_line)
-    street_address = street_match.group(1) if street_match else ""
+    street_address = street_match.group(1).strip() if street_match else ""
 
     city_state_zip = data.split("\n")[2].strip()
     city_match = re.search(r'([^,]+),', city_state_zip)
@@ -18,16 +18,7 @@ def parse_data(data):
     phone_match = re.search(r'Phone:\s+([\d-]+)', data)
     phone_number = phone_match.group(1) if phone_match else ""
 
-    print({
-        "Company Name": company_name,
-        "Street Address": street_address,
-        "City": city,
-        "State": state,
-        "Zip Code": zip_code,
-        "Phone Number": phone_number
-    })
-
-    return {
+    parsed_data = {
         "Company Name": company_name,
         "Street Address": street_address,
         "City": city,
@@ -35,6 +26,8 @@ def parse_data(data):
         "Zip Code": zip_code,
         "Phone Number": phone_number
     }
+
+    return parsed_data
 
 # Example usage:
 data_set = """
