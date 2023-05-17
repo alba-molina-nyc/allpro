@@ -1,5 +1,7 @@
 import csv
 import re
+from collections import Counter
+
 
 def parse_data(data):
     company_name = data[0].strip()
@@ -45,5 +47,16 @@ with open(csv_file_path, "w", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(["Company Name", "Street Address", "City", "State", "Zip Code", "Phone Number"])  # Write header
     writer.writerows(parsed_data_list)  # Write data rows
+
+print(f"Parsed data has been saved to {csv_file_path}.")
+
+company_names = []  # Create an empty list to store company names
+
+company_name_counts = Counter(company_names)
+
+
+# Print the counts of each company name
+for company_name, count in company_name_counts.items():
+    print(f"{company_name}: {count} occurrences")
 
 print(f"Parsed data has been saved to {csv_file_path}.")
